@@ -4,14 +4,19 @@ import requests
 import urllib3 #internet requests
 from bs4 import BeautifulSoup #HTML text formattig and managing
 import stringformat
-import re#for text formatig
+import re #for text formatig
 import unidecode
 import os
+from math import floor
 import urllib.request #for image downloading
 # html_text = requests.get('https://hotline.ua/ua/computer/besprovodnoe-oborudovanie/?q=Xiaomi').text
 # print(html_text)
 
-class Review:
+def deleteCharsFromText(text, chars):
+    for char in chars:
+        text=text.replace(char,"")
+    return text
+class Review:#Need getReviews method for working
     def __init__(self,comment,stars, user):
         self.comment = comment
         self.stars = unidecode.unidecode(textFormat(stars))
@@ -20,6 +25,22 @@ class Review:
         print(f"User: {self.username}")
         print(f"Review text: {self.comment}")
         print(f"Stars: {self.stars}")
+    def keyWordsSearch(self, key_words):
+        key_words = deleteCharsFromText(key_words,",.!()?{[}]\|").lower().split()
+        comment_text = self.comment.lower()
+        for word in key_words:
+            if word not in comment_text:
+                return False
+        return True
+    def countWords(self):#roughly
+        return self.comment.count(" ")+1
+    def isInStars(self, stars):
+        return stars==None or (stars == floor(float(self.stars)))
+    def isInCritarias(self, key_words, stars, isLong):
+        min_words = 0
+        if isLong:
+            min_words = 15
+        return self.keyWordsSearch(key_words) and self.isInStars(stars) and self.countWords()>=min_words
 class Item:
     #items_list = []#for all Item members
     def isImageExist(self):
@@ -60,11 +81,11 @@ class Item:
             print(f"Average rating: {self.av_stars}")
         except:
             pass
-    # def saveImage(url, name):
-        
-    #def getReviews():
-        
-    #def getDescription():#from item page
+    def getReviewFromCriterias(self, key_words, stars, isLong):#return first appearence
+        for review in self.reviews:
+            if review.isInCritarias(key_words, stars, isLong):
+                return review 
+        return None
         
 
         
@@ -76,13 +97,16 @@ def getHTMLtext(url):#text version of HTML page
     return soup
 
 def textFormat(txt):# Just for text formating(delete the spaces between words)
-    return re.sub(' +', ' ',txt.replace('\n', '').replace('\t','').lstrip())
+    return re.sub(' +', ' ',txt.replace('\n', '').replace('\t','').lstrip().rstrip())
+
+# def getFileExtension(url):
+#     return url.split('.')[-1]
 
 def addFormatedItems(html_txt, items_class):#from Hotline page
     items = html_txt.find_all('div', class_='list-item list-item--row')#not formated
-    items_formated = list()
+    #items_formated = list()
     for item in items:
-        item_formated= list()
+        #item_formated= list()
         item_link= "https://hotline.ua" + item.find_all('a')[1].get('href')#magic number
         item_title = textFormat(item.find('a', class_='list-item__title text-md').text)
         item_price = unidecode.unidecode(textFormat(item.find('span', class_='price__value').text))
@@ -90,10 +114,12 @@ def addFormatedItems(html_txt, items_class):#from Hotline page
         
         try:
             item_img_url = "https://hotline.ua"+item.find('img').get('src')
-            urllib.request.urlretrieve(item_img_url, f"Images\{item_title}.jpg")
+            urllib.request.urlretrieve(item_img_url, f"Images/{item_title}.jpg")
+            #print(f"Title: {item_title}\nURL: {item_img_url}\n")
         except Exception as e:
+            #print(f"Title: {item_title}\nURL: {item_img_url}\nError: {e}\n")
             pass
-            # print(f"Title: {item_title}\nURL: {item_img_url}\nError: {e}")
+            
 
         items_class.append(Item(item_title,item_link,item_price,item_specification))
 
@@ -114,32 +140,24 @@ def createFolder(name):
     except:
         pass
     
-# search = str(input("Enter what are you looking for: "))
+
 def deleteImages():
     for file in os.listdir("Images"):
         os.remove(f"Images/{file}")
 
 createFolder("Images")
-search = "xiaomi"
-# search = formatingSearch(search)
+
+search = "Xiaomi Mi WiFi Router 4A Gigabit Edition"
+# search = str(input("Enter what are you looking for: "))
 items_class = []
 addFormatedItems(getHTMLtext('https://hotline.ua/ua/computer/besprovodnoe-oborudovanie/?q='+search),items_class)
-# items = getFormatedItems(getHTMLtext("https://hotline.ua/ua/sr/?q=Wi%20fi"))
-#printItems(items)
-#item = Item("Xiaomi Mi WiFi Router 4A Global (DVB4230GL)","https://hotline.ua/ua/computer-besprovodnoe-oborudovanie/xiaomi-mi-wifi-router-4a-global-dvb4230gl/", "1022", "Бездротовий маршрутизатор (роутер) • 802.11ac • інтерфейс підключення: 2x10 / 100 Ethernet • швидкість з'єднання: 300 + 867 Мбіт / с • 12.2019")
-# for item in items:
-#     items_class.append(Item(*item))
-#item.print()
 
-# items_class[0].getReviews()
-# items_class[0].print()
-# items_class[0].reviews[0].print()
 
-# items_class[1].getReviews()
-# items_class[1].print()
-# items_class[1].reviews[0].print()
-for item in items_class:
-    if not item.isImageExist():
-        item.print()
+items_class[0].getReviews()
+key_words = "працює"
+review = items_class[0].getReviewFromCriterias(key_words, None, False)
+if review:
+    review.print()
+
 deleteImages()
-input("\n\nEnter to exit....")
+#input("\n\nEnter to exit....")
