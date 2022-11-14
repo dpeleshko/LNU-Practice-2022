@@ -59,7 +59,7 @@ class Item:
         # html = getHTMLtext(link)
         # self.average_rating = html.find("div",class_="informer-review__rating-value").text
     
-    def getReviews(self):
+    def downloadReviews(self):
         html = getHTMLtext(self.link+"?tab=reviews&filter=reviews")
         self.av_stars = float(html.find("div",class_="informer-review__rating-value").text)
         reviews_html = html.find_all("div", class_ ="review__col-content")
@@ -81,6 +81,12 @@ class Item:
             print(f"Average rating: {self.av_stars}")
         except:
             pass
+    def getInfo(self):
+        info = []
+        info.append(self.title)
+        info.append(self.price)
+        info.append(self.link)
+        return info
     def getReviewFromCriterias(self, key_words, stars, isLong):#return first appearence
         for review in self.reviews:
             if review.isInCritarias(key_words, stars, isLong):
@@ -89,7 +95,8 @@ class Item:
         
 
         
-def getHTMLtext(url):#text version of HTML page
+def getHTMLtext(search_text):#text version of HTML page
+    url = 'https://hotline.ua/ua/computer/besprovodnoe-oborudovanie/?q='+formatingSearch(search_text)
     http = urllib3.PoolManager()
     resp = http.request('GET', url)
     html_text = resp.data.decode('utf-8')
@@ -145,19 +152,19 @@ def deleteImages():
     for file in os.listdir("Images"):
         os.remove(f"Images/{file}")
 
-createFolder("Images")
+# createFolder("Images")
 
-search = "Xiaomi Mi WiFi Router 4A Gigabit Edition"
-# search = str(input("Enter what are you looking for: "))
-items_class = []
-addFormatedItems(getHTMLtext('https://hotline.ua/ua/computer/besprovodnoe-oborudovanie/?q='+search),items_class)
+# search = "Xiaomi Mi WiFi Router 4A Gigabit Edition"
+# # search = str(input("Enter what are you looking for: "))
+# items_class = []
+# addFormatedItems(getHTMLtext('https://hotline.ua/ua/computer/besprovodnoe-oborudovanie/?q='+search),items_class)
 
 
-items_class[0].getReviews()
-key_words = "працює"
-review = items_class[0].getReviewFromCriterias(key_words, None, False)
-if review:
-    review.print()
+# items_class[0].downloadReviews()
+# key_words = "працює"
+# review = items_class[0].getReviewFromCriterias(key_words, None, False)
+# if review:
+#     review.print()
 
-deleteImages()
+#deleteImages()
 #input("\n\nEnter to exit....")
