@@ -17,33 +17,27 @@
    <widget class="QPushButton" name="nextButton">
     <property name="geometry">
      <rect>
-      <x>600</x>
-      <y>270</y>
-      <width>71</width>
-      <height>28</height>
+      <x>580</x>
+      <y>250</y>
+      <width>91</width>
+      <height>71</height>
      </rect>
     </property>
     <property name="text">
-     <string>NEXT</string>
+     <string/>
     </property>
-   </widget>
-   <widget class="QGraphicsView" name="graphicsView">
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>150</y>
-      <width>351</width>
-      <height>291</height>
-     </rect>
+    <property name="icon">
+     <iconset>
+      <normaloff>../../Download/NEXT.png</normaloff>../../Download/NEXT.png</iconset>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>80</y>
-      <width>61</width>
-      <height>28</height>
+      <x>520</x>
+      <y>40</y>
+      <width>91</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
@@ -54,7 +48,7 @@
     <property name="geometry">
      <rect>
       <x>220</x>
-      <y>80</y>
+      <y>50</y>
       <width>271</width>
       <height>25</height>
      </rect>
@@ -63,33 +57,81 @@
      <string/>
     </property>
     <property name="text">
+     <string/>
+    </property>
+    <property name="placeholderText">
      <string>Enter the model name here...</string>
     </property>
    </widget>
    <widget class="QLabel" name="modelTitle">
     <property name="geometry">
      <rect>
-      <x>210</x>
-      <y>460</y>
-      <width>361</width>
+      <x>140</x>
+      <y>430</y>
+      <width>511</width>
       <height>19</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="text">
      <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
    <widget class="QPushButton" name="previousButton">
     <property name="geometry">
      <rect>
-      <x>100</x>
-      <y>270</y>
+      <x>90</x>
+      <y>250</y>
+      <width>93</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../../Download/AI in Art/back.png</normaloff>../../Download/AI in Art/back.png</iconset>
+    </property>
+   </widget>
+   <widget class="QLabel" name="image">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>150</y>
+      <width>271</width>
+      <height>261</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="changeWindowButton">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>510</y>
       <width>93</width>
       <height>28</height>
      </rect>
     </property>
     <property name="text">
-     <string>PREVIOUS</string>
+     <string>Get Reviews</string>
     </property>
    </widget>
   </widget>

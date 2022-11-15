@@ -53,6 +53,7 @@ class Item:
         self.description = str() #TODO
         self.reviews = [] #will add later TODO
         self.image_path = None
+        #self.av_stars = 0
         if(self.isImageExist()):
             self.image_path = f"Images/{self.title}.jpg"
         
@@ -95,10 +96,10 @@ class Item:
         
 
         
-def getHTMLtext(search_text):#text version of HTML page
-    url = 'https://hotline.ua/ua/computer/besprovodnoe-oborudovanie/?q='+formatingSearch(search_text)
+def getHTMLtext(URL):#search_text):#text version of HTML page
+    #url = 'https://hotline.ua/ua/computer/besprovodnoe-oborudovanie/?q='+formatingSearch(search_text)
     http = urllib3.PoolManager()
-    resp = http.request('GET', url)
+    resp = http.request('GET', URL)
     html_text = resp.data.decode('utf-8')
     soup = BeautifulSoup(html_text, 'lxml')
     return soup
@@ -124,6 +125,7 @@ def addFormatedItems(html_txt, items_class):#from Hotline page
             urllib.request.urlretrieve(item_img_url, f"Images/{item_title}.jpg")
             #print(f"Title: {item_title}\nURL: {item_img_url}\n")
         except Exception as e:
+            continue
             #print(f"Title: {item_title}\nURL: {item_img_url}\nError: {e}\n")
             pass
             
@@ -157,7 +159,7 @@ def deleteImages():
 # search = "Xiaomi Mi WiFi Router 4A Gigabit Edition"
 # # search = str(input("Enter what are you looking for: "))
 # items_class = []
-# addFormatedItems(getHTMLtext('https://hotline.ua/ua/computer/besprovodnoe-oborudovanie/?q='+search),items_class)
+# addFormatedItems(getHTMLtext("https://hotline.ua/ua/computer/besprovodnoe-oborudovanie/?q="+formatingSearch(search)),items_class)
 
 
 # items_class[0].downloadReviews()
