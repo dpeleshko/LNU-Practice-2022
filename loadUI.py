@@ -28,6 +28,7 @@ class MainWindow(QMainWindow):
         
         #Actions
         self.searchButton.clicked.connect(self.search)
+        self.search_text.returnPressed.connect(self.search)
         # self.nextButton.clicked.connect(self.next)
         # self.previousButton.clicked.connect(self.previous)
         # self.changeWindowButton.clicked.connect(self.changeWindow)
@@ -37,13 +38,16 @@ class MainWindow(QMainWindow):
         
     def searchReview(self):
         key_words = self.key_words.text()
+        is_long = self.is_long.isChecked()
         stars = None
-        if not self.allstars.isChecked():
+        if self.allstars.isChecked():
+            self.reviews = self.item.getReviewFromCriterias(key_words, None, is_long)
+        else:
             for i in range(5):
                 if self.stars[i].isChecked():
                     stars = i+1
-        is_long = self.is_long.isChecked()
-        self.reviews = self.item.getReviewFromCriterias(key_words, stars, is_long)
+                    break
+            self.reviews = self.item.getReviewFromCriterias(key_words, stars, is_long)
         self.review_index = 0
         if self.reviews:
             self.nextReviewButton.clicked.connect(self.nextReview)
@@ -115,6 +119,7 @@ class MainWindow(QMainWindow):
         for j in range(5):
             self.stars.append(self.findChild(QRadioButton, f'star{j+1}'))
         #Actions
+        self.key_words.returnPressed.connect(self.searchReview)
         self.search_button.clicked.connect(self.searchReview)
         self.returnButton.clicked.connect(self.returnToMain)
         self.image2.setPixmap(QPixmap(self.item.image_path))

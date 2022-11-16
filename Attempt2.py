@@ -39,7 +39,7 @@ class Review:#Need getReviews method for working
     def isInCritarias(self, key_words, stars, isLong):
         min_words = 0
         if isLong:
-            min_words = 15
+            min_words = 25
         return self.keyWordsSearch(key_words) and self.isInStars(stars) and self.countWords()>=min_words
 class Item:
     #items_list = []#for all Item members
@@ -96,6 +96,8 @@ class Item:
         for review in self.reviews:
             if review.isInCritarias(key_words, stars, isLong):
                 good_reviews.append(review)
+            else:
+                1+2
         return good_reviews
         
 
