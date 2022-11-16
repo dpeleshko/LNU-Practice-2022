@@ -62,7 +62,10 @@ class Item:
     
     def downloadReviews(self):
         html = getHTMLtext(self.link+"?tab=reviews&filter=reviews")
-        self.av_stars = float(html.find("div",class_="informer-review__rating-value").text)
+        try:
+            self.av_stars = float(html.find("div",class_="informer-review__rating-value").text)
+        except:
+            self.av_stars = 0
         reviews_html = html.find_all("div", class_ ="review__col-content")
         for review in reviews_html:
             try:
@@ -89,10 +92,11 @@ class Item:
         info.append(self.link)
         return info
     def getReviewFromCriterias(self, key_words, stars, isLong):#return first appearence
+        good_reviews = []
         for review in self.reviews:
             if review.isInCritarias(key_words, stars, isLong):
-                return review 
-        return None
+                good_reviews.append(review)
+        return good_reviews
         
 
         
