@@ -1,8 +1,8 @@
-from PyQt6.QtWidgets import QStackedWidget ,QTextEdit,QTextBrowser, QRadioButton, QCheckBox, QMainWindow,QApplication, QLineEdit,QWidget, QLabel, QPushButton, QGraphicsView, QMenuBar, QStatusBar, QGraphicsItem, QGraphicsPixmapItem
+from PyQt6.QtWidgets import QStackedWidget ,QTextEdit, QRadioButton, QCheckBox, QMainWindow,QApplication, QLineEdit,QWidget, QLabel, QPushButton
 from PyQt6 import uic
 import sys
 from Attempt2 import *
-from PyQt6.QtGui import QPixmap, QImage,QIcon
+from PyQt6.QtGui import QPixmap,QIcon
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -172,6 +172,10 @@ class MainWindow(QMainWindow):
             self.noRoutersFound()
     def search(self):
         self.routers = []
+        try:
+            self.i = 0
+        except:
+            pass
         URL = "https://hotline.ua/ua/computer/besprovodnoe-oborudovanie/?q="+formatingSearch(self.search_text.text())
         addFormatedItems(getHTMLtext(URL),self.routers)
         try:
@@ -204,19 +208,4 @@ if __name__ == "__main__":
     app.exec()
     
     deleteImages()
-# createFolder("Images")     
-# #initiate the app
 
-# app = QApplication(sys.argv)
-# UIWindow = MainWindow()
-
-# # search_text = "Xiaomi 4A"
-# # URL = "https://hotline.ua/ua/computer/besprovodnoe-oborudovanie/?q="+formatingSearch(search_text)
-# # routers = []
-# # addFormatedItems(getHTMLtext(URL),routers)
-# # routers[0].downloadReviews()
-# # form = ItemWindow(routers,0,UIWindow)
-
-# app.exec()
-
-# deleteImages()

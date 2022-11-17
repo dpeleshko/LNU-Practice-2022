@@ -1,9 +1,7 @@
 from cgitb import text
 from xml.etree.ElementTree import iterparse
-import requests
 import urllib3 #internet requests
 from bs4 import BeautifulSoup #HTML text formattig and managing
-import stringformat
 import re #for text formatig
 import unidecode
 import os
