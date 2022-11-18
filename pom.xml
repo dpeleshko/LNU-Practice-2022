@@ -68,7 +68,7 @@
                                 <descriptorRef>jar-with-dependencies</descriptorRef>
                             </descriptorRefs>
                             <archive>
-                                <manifest>
+                                <manifest>K
                                     <mainClass>BingWebSearch.java</mainClass>
                                 </manifest>
                             </archive>
