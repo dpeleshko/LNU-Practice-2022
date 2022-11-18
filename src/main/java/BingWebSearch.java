@@ -63,33 +63,6 @@ public class BingWebSearch {
 
         outputResult = relevantCriterion(objects);
 
-//        System.out.println("\nFirst Page:");
-//        System.out.println("\tName:" + obj1.get("name"));
-//        System.out.println("\tDesciprion:" + obj1.get("snippet"));
-
-//        System.out.println("\nSecond Page:");
-//        System.out.println("\tName:" + obj2.get("name"));
-//        System.out.println("\tDesciprion:" + obj2.get("snippet"));
-//
-//        System.out.println("\nThird Page:");
-//        System.out.println("\tName:" + obj3.get("name"));
-//        System.out.println("\tDesciprion:" + obj3.get("snippet"));
-
-//        outputResult += gson.toJson(obj1)
-//                + "\n" + gson.toJson(obj2)
-//                + "\n" + gson.toJson(obj3)
-//                + "\n" + gson.toJson(obj4)
-//                + "\n" + gson.toJson(obj5)
-//                + "\n\nFirst Page:"
-//                + "\n\tName:" + obj1.get("name")
-//                + "\n\tDesciprion:" + obj1.get("snippet")
-//                + "\n\nSecond Page:"
-//                + "\n\tName:" + obj2.get("name")
-//                + "\n\tDesciprion:" + obj2.get("snippet")
-//                + "\n\nThird Page:"
-//                + "\n\tName:" + obj3.get("name")
-//                + "\n\tDesciprion:" + obj3.get("snippet");
-
         System.out.println(outputResult);
         return outputResult;
     }
